@@ -26,7 +26,7 @@
 
 <body>
   <dir class="col-md-12">
-    <h1>HKBU GPA Calcular</h1>
+    <h1>HKBU GPA Calcular <small>By Carmen Chan</small></h1>
     <dir class="row">
       <form class="form-inline" role="form">
         <div class="form-group">
@@ -41,7 +41,8 @@
         </div>
         <div class="input-group">
           <label for="inputGrade">Target Honours</label>
-          <select id="courseGrade" class="form-control" name="data[0][grade]">
+          <select id="targetHonour" class="form-control" name="targethonour">
+          <option>-----</option>
           <option>First</option>
           <option>Second UP</option>
           <option>Second Low</option>
@@ -51,7 +52,7 @@
     </dir>
     <h2>Semester GPA</h2>
     <dir class="row">
-      <form class="form-inline" role="form">
+      <form class="form-inline" role="form" id="course">
         <div class="form-group">
           <div class="input-group">
             <label for="inputCourseCode">Course Code</label>
@@ -65,6 +66,7 @@
         <div class="input-group">
           <label for="inputGrade">Grade</label>
           <select id="courseGrade" class="form-control" name="data[0][grade]">
+          <option>-</option>
           <option>A</option>
           <option>A-</option>
           <option>B+</option>
@@ -83,43 +85,143 @@
       <button type="button" id="addRow" class="btn btn-primary">Add row</button>
       <button type="summit" id="summit" class="btn btn-success">Summit</button>
     </dir>
-      <dir class="col-md-8">
+    <dir class="col-md-8">
       <table class="table table-bordered">
         <tr>
           <th>Sem GPA</td>
-          <td></td>
-          <th>cGPA</td>
-          <td></td>
+            <td>
+              <p id="sGPA"></p>
+            </td>
+            <th>cGPA</td>
+              <td>
+                <p id="ncGPA"></p>
+              </td>
         </tr>
         <tr>
-          <th>Deal list</td>
-          <td></td>
+          <th>Deal list</th>
+          <td>
+            <p id="ah"></p>
+          </td>
           <th>Hornor</td>
-          <td></td>
+            <td>
+              <p id="hn"></p>
+            </td>
         </tr>
         <tr>
-          <th colspan="2">target gpa for honour</td>
-          <td colspan="2"></td>
+          <th colspan="2">Target gpa for honour</td>
+            <td colspan="2">
+              <p id="targetGPA"></p>
+            </td>
         </tr>
       </table>
-      </dir>
     </dir>
-    <script>
-      $('#addRow').click(function () {
-        //var content = document.getElementById("courseGrade").outerHTML;
-        //$(this).before(content);
-        var content = $(this).closest('.row');
+  </dir>
+  <script>
+    var gd_pt = [
+      { grade: "A", pt: 4.0 },
+      { grade: "A-", pt: 3.66 },
+      { grade: "B+", pt: 3.33 },
+      { grade: "B", pt: 3.0 },
+      { grade: "B-", pt: 2.66 },
+      { grade: "C+", pt: 2.33 },
+      { grade: "C", pt: 2 },
+      { grade: "C-", pt: 1.66 },
+      { grade: "D", pt: 1 },
+      { grade: "F", pt: 0 },
+    ];
+    var hn_pt = [
+      { honour: "Second Low", pt: 2.5 },
+      { honour: "Second UP", pt: 3.0 },
+      { honour: "First", pt: 3.4 },
+    ];
+    var row = 0;
+    $('#addRow').click(function () {
+      if (row <= 10) {
+        var content = document.getElementById("course").outerHTML;
+        $(this).before(content);
+        var content = $(this).closest('.row').find("form");
         console.log(content);
-      });
-      //console.log($('addRow').closest('.form-inline'));
+        row++;
+      }
+    });
+    //console.log($('addRow').closest('.form-inline'));
 
-      $('#summit').click(function () {
-        //var content = document.getElementById("courseGrade").outerHTML;
-        //$(this).before(content);
-        var content = $('#addRow').closest('.row');
-        console.log(content);
+    $('#summit').click(function () {
+      var oldcredit = $("#inputCGPA").val() * $("#inputEnrolledCredit").val();
+      //console.log(oldcredit);
+      var newGrade = "D";
+      //var result = $.grep(gd_pt, function(o,index){return o.grade == newGrade});
+      //console.log(result[0].pt);
+      var semCredit = 0;
+      var cGrade = false;
+      var sGPA = 0;
+      var ncgPA;
+
+      $("#sGPA").text(function (i, text) {
+        return sGPA.toFixed(2);;
       });
-    </script>
+
+      $("#ncGPA").text(function (i, text) {
+        ncgPA = (sGPA * semCredit + oldcredit) / ((parseInt($("#inputEnrolledCredit").val()) + semCredit));
+        return ncgPA;
+      });
+
+
+      $("#ah").text(function (i, text) {
+        if (semCredit > 12 && cGrade === true) {
+          if (sGPA > 3.5) {
+            return "President's Honour Roll";
+          } else if (sGPA > 3.0) {
+            return "Dean's List";
+          }
+        } else {
+          return "N.A.";
+        }
+      });
+
+      $("#hn").text(function (i, text) {
+        var hon = "honour";
+        hn_pt.forEach(function (e) {
+          if (ncgPA > e.pt) {
+            hon = e.honour;
+          }
+        });
+        console.log(hon);
+        return hon.toString();
+      });
+
+      //128 as normal requirement for Graduation
+      var rmnCr = 128 - $("#inputEnrolledCredit").val();
+      var tag;
+      if ($("#targetHonour").val() !== "-----") {
+        var result = $.grep(hn_pt, function (o, index) { return o.honour == $("#targetHonour").val() });
+        tag = (result[0].pt * 128 - oldcredit) / rmnCr;
+        $("#targetGPA").text(function (i, text) {
+          if (tag > 4) {
+            $(this).addClass("bg-danger");
+            $(this).css("color", "red");
+            return "Mission Impossible";
+          } else if (tag >= 2) {
+            $(this).removeClass("bg-success");
+            $(this).addClass("bg-danger");
+            $(this).css("color", "black");
+            return tag.toFixed(2);
+          }
+          else if (tag >= 0) {
+            $(this).removeClass("bg-danger");
+            $(this).addClass("bg-success");
+            $(this).css("color", "black");
+            return tag.toFixed(2);
+          } else {
+            $(this).removeClass("bg-danger");
+            $(this).addClass("bg-success");
+            $(this).css("color", "black");
+            return "Done";
+          }
+        });
+      }
+    });
+  </script>
 
 </body>
 
