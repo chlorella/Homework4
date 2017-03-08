@@ -18,9 +18,14 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+      <!-- jQuery (Bootstrap 所有外掛均需要使用) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <!-- 依需要參考已編譯外掛版本（如下），或各自獨立的外掛版本 -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+  <dir class="col-md-8">
   <h1>HKBU GPA Calcular</h1>
   <form class="form-inline" role="form">
     <div class="form-group">
@@ -36,20 +41,20 @@
     </div>
   </form>
   <h2>Semester GPA</h2>
-  <form class="form-inline" role="form" id="courseGrade">
+  <form class="form-inline" role="form">
     <div class="form-group">
       <div class="input-group">
         <label for="inputCourseCode">Course Code</label>
-        <input type="text" class="form-control" id="inputCourseCode" placeholder="Course Code">
+        <input id="courseGrade" type="text" class="form-control" name="data[0][code]" placeholder="Course Code">
       </div>
     </div>
     <div class="input-group">
       <label for="inputCredit">Credit</label>
-      <input type="number" class="form-control" id="inputCredit" placeholder="Credit">
+      <input id="courseGrade" type="number" class="form-control" name="data[0][cd]" placeholder="Credit">
     </div>
     <div class="input-group">
       <label for="inputGrade">Grade</label>
-      <select class="form-control">
+      <select id="courseGrade" class="form-control" name="data[0][grade]">
           <option>A</option>
           <option>A-</option>
           <option>B+</option>
@@ -62,18 +67,19 @@
           <option>F</option>
       </select>
     </div>
-    </div>
   </form>
   <button type="button" id="addRow" class="btn btn-default">Add row</button>
+  <button type="summit" id="summit" class="btn btn-default">Summit</button>
+  </dir>
   <script>
-    $('#addrow').click(function(){
-        document.getElementById("addrow").value="Close Curtain";
-    });
+      $('#addRow').click(function(){
+        //var content = document.getElementById("courseGrade").outerHTML;
+        //$(this).before(content);
+        var content = $('#addRow').closest('.form-inline');
+        console.log(content);
+      });
+        console.log($('addRow').closest('.form-inline'));
   </script>
-  <!-- jQuery (Bootstrap 所有外掛均需要使用) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <!-- 依需要參考已編譯外掛版本（如下），或各自獨立的外掛版本 -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 </body>
 
