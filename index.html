@@ -56,16 +56,16 @@
         <div class="form-group">
           <div class="input-group">
             <label for="inputCourseCode">Course Code</label>
-            <input id="courseGrade" type="text" class="form-control" name="data[0][code]" placeholder="Course Code">
+            <input id="course-0" type="text" class="form-control" name="code[0]" placeholder="Course Code">
           </div>
         </div>
         <div class="input-group">
           <label for="inputCredit">Credit</label>
-          <input id="courseGrade" type="number" class="form-control" name="data[0][cd]" placeholder="Credit">
+          <input id="course-1" type="number" class="form-control" name="cd[0]" placeholder="Credit">
         </div>
         <div class="input-group">
           <label for="inputGrade">Grade</label>
-          <select id="courseGrade" class="form-control" name="data[0][grade]">
+          <select id="course-2" class="form-control" name="grade[0]">
           <option>-</option>
           <option>A</option>
           <option>A-</option>
@@ -73,7 +73,7 @@
           <option>B</option>
           <option>B-</option>
           <option>C+</option>
-          <option>C-</option>
+          <option>C</option>
           <option>C-</option>
           <option>D</option>
           <option>F</option>
@@ -115,6 +115,17 @@
         </tr>
       </table>
     </dir>
+    <dir class="col-md-10">
+      <p>Reference</p>
+      <ul>
+        <li>
+          <a href="http://ar.hkbu.edu.hk/file/123">EXPLANATORY NOTES for HKBU GRADING SYSTEM</a>
+        </li>
+        <li>
+          <a href="http://jsfiddle.net/c6WG8/8/">Code Example</a>
+        </li>
+      </ul>
+    </dir>
   </dir>
   <script>
     var gd_pt = [
@@ -136,39 +147,83 @@
     ];
     var row = 0;
     $('#addRow').click(function () {
-      if (row <= 10) {
-        var content = document.getElementById("course").outerHTML;
-        $(this).before(content);
-        var content = $(this).closest('.row').find("form");
-        console.log(content);
-        row++;
+      if (row < 10) {
+        var content = $("form:last").html();
+        $("form:last").after('<form class="form-inline" role="form" id="course">' + content + "</form>");
+        var content = $("form:last").find("input");
+
+        content.attr("name", function (i, oldVal) {
+          return oldVal.replace(/\d+/, function (m) {
+            return (+m + 1);
+          });
+        });
+        //Select
+        content = $("form:last").find("select");
+        content.attr("name", function (i, oldVal) {
+          return oldVal.replace(/\d+/, function (m) {
+            return (+m + 1);
+          });
+        });
       }
+      row++;
     });
-    //console.log($('addRow').closest('.form-inline'));
 
     $('#summit').click(function () {
       var oldcredit = $("#inputCGPA").val() * $("#inputEnrolledCredit").val();
       //console.log(oldcredit);
-      var newGrade = "D";
-      //var result = $.grep(gd_pt, function(o,index){return o.grade == newGrade});
-      //console.log(result[0].pt);
+      var newGrade = "B+";
+      var result = $.grep(gd_pt, function (o, index) { return o.grade == newGrade });
+      console.log("test:" + result[0].pt);
+
+      //$("input[name^=cd]")
+
       var semCredit = 0;
+      var credit = [];
+      var g_pt = [];
       var cGrade = false;
       var sGPA = 0;
       var ncgPA;
 
+      $("input[name^=cd]").each(function () {
+        console.log("cd:" + $(this).val());
+        credit.push(parseInt($(this).val()));
+      });
+
+      $("select[name^=grade]").each(function () {
+        console.log("g " + $(this).val());
+        var newGrade = $(this).val()
+        if (newGrade != "-") {
+          var result = $.grep(gd_pt, function (o, index) { return o.grade == newGrade });
+          console.log("r " + result[0].pt);
+          g_pt.push(result[0].pt);
+          if (result[0].pt < 2) {
+            cGrade = true;
+          }
+        } else {
+          g_pt.push(-1);
+        }
+      });
+
+      for (var i = 0; i < credit.length; i++) {
+        if (g_pt[i] != -1) {
+          semCredit += credit[i];
+          sGPA += g_pt[i] * credit[i];
+        }
+      }
+      sGPA = sGPA / semCredit;
+
       $("#sGPA").text(function (i, text) {
-        return sGPA.toFixed(2);;
+        return sGPA.toFixed(2);
       });
 
       $("#ncGPA").text(function (i, text) {
         ncgPA = (sGPA * semCredit + oldcredit) / ((parseInt($("#inputEnrolledCredit").val()) + semCredit));
-        return ncgPA;
+        return ncgPA.toFixed(2);
       });
 
 
       $("#ah").text(function (i, text) {
-        if (semCredit > 12 && cGrade === true) {
+        if (semCredit > 12 && cGrade == false) {
           if (sGPA > 3.5) {
             return "President's Honour Roll";
           } else if (sGPA > 3.0) {
@@ -180,13 +235,13 @@
       });
 
       $("#hn").text(function (i, text) {
-        var hon = "honour";
+        var hon = "Lower than Sec UP";
         hn_pt.forEach(function (e) {
           if (ncgPA > e.pt) {
             hon = e.honour;
           }
         });
-        console.log(hon);
+        //        console.log(hon);
         return hon.toString();
       });
 
