@@ -25,47 +25,88 @@
 </head>
 
 <body>
-  <dir class="col-md-12">
-    <h1>HKBU GPA Calcular <small>By Carmen Chan</small></h1>
-    <dir class="row">
-      <form class="form-inline" role="form">
-        <div class="form-group">
-          <div class="input-group">
-            <label for="inputCGPA">CGPA</label>
-            <input type="number" step="0.01" class="form-control" id="inputCGPA" placeholder="CGPA">
+  <!-- Navigation -->
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+        <a class="navbar-brand" href="https://chlorella.github.io/">Carmen Chan</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="https://chlorella.github.io/homework3/">HW3</a>
+          </li>
+          <li>
+            <a href="https://chlorella.github.io/homework4/">HW4</a>
+          </li>
+          <li>
+            <a href="https://chlorella.github.io/homework5/">HW5</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+
+  <header>
+    <dir class="container">
+      <br>
+      <dir class="col-lg-12">
+        <h1>HKBU GPA Calcular <small>By Carmen Chan</small></h1>
+      </dir>
+    </dir>
+  </header>
+
+  <dir class="container">
+    <dir class="col-lg-12">
+      <dir class="row">
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <div class="input-group">
+              <label for="inputCGPA">CGPA</label>
+              <input type="number" step="0.01" class="form-control" id="inputCGPA" placeholder="CGPA">
+            </div>
           </div>
-        </div>
-        <div class="input-group">
-          <label for="inputEnrolledCredit">Enrolled Credit</label>
-          <input type="number" class="form-control" id="inputEnrolledCredit" placeholder="Enrolled Credit">
-        </div>
-        <div class="input-group">
-          <label for="inputGrade">Target Honours</label>
-          <select id="targetHonour" class="form-control" name="targethonour">
+          <div class="input-group">
+            <label for="inputEnrolledCredit">Enrolled Credit</label>
+            <input type="number" class="form-control" id="inputEnrolledCredit" placeholder="Enrolled Credit">
+          </div>
+          <div class="input-group">
+            <label for="inputGrade">Target Honours</label>
+            <select id="targetHonour" class="form-control" name="targethonour">
           <option>-----</option>
           <option>First</option>
           <option>Second UP</option>
           <option>Second Low</option>
       </select>
-        </div>
-      </form>
-    </dir>
-    <h2>Semester GPA</h2>
-    <dir class="row">
-      <form class="form-inline" role="form" id="course">
-        <div class="form-group">
-          <div class="input-group">
-            <label for="inputCourseCode">Course Code</label>
-            <input id="course-0" type="text" class="form-control" name="code[0]" placeholder="Course Code">
           </div>
-        </div>
-        <div class="input-group">
-          <label for="inputCredit">Credit</label>
-          <input id="course-1" type="number" class="form-control" name="cd[0]" placeholder="Credit">
-        </div>
-        <div class="input-group">
-          <label for="inputGrade">Grade</label>
-          <select id="course-2" class="form-control" name="grade[0]">
+        </form>
+      </dir>
+      <h2>Semester GPA</h2>
+      <dir class="row">
+        <form class="form-inline" role="form" id="course">
+          <div class="form-group">
+            <div class="input-group">
+              <label for="inputCourseCode">Course Code</label>
+              <input id="course-0" type="text" class="form-control" name="code[0]" placeholder="Course Code">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="inputCredit">Credit</label>
+            <input id="course-1" type="number" class="form-control" name="cd[0]" placeholder="Credit">
+          </div>
+          <div class="input-group">
+            <label for="inputGrade">Grade</label>
+            <select id="course-2" class="form-control" name="grade[0]">
           <option>-</option>
           <option>A</option>
           <option>A-</option>
@@ -78,56 +119,58 @@
           <option>D</option>
           <option>F</option>
       </select>
-        </div>
-      </form>
-    </dir>
-    <dir class="row">
-      <button type="button" id="addRow" class="btn btn-primary">Add row</button>
-      <button type="summit" id="summit" class="btn btn-success">Summit</button>
-    </dir>
-    <dir class="col-md-8">
-      <h2>Result</h2>
-      <table class="table table-bordered">
-        <tr>
-          <th>Sem GPA</td>
-            <td>
-              <p id="sGPA"></p>
-            </td>
-            <th>cGPA</td>
+          </div>
+        </form>
+      </dir>
+      <dir class="row">
+        <button type="button" id="addRow" class="btn btn-primary">Add row</button>
+        <button type="summit" id="summit" class="btn btn-success">Summit</button>
+      </dir>
+      <dir class="col-md-8">
+        <h2>Result</h2>
+        <table class="table table-bordered">
+          <tr>
+            <th>Sem GPA</td>
               <td>
-                <p id="ncGPA"></p>
+                <p id="sGPA"></p>
               </td>
-        </tr>
-        <tr>
-          <th>Deal list</th>
-          <td>
-            <p id="ah"></p>
-          </td>
-          <th>Hornor</td>
+              <th>cGPA</td>
+                <td>
+                  <p id="ncGPA"></p>
+                </td>
+          </tr>
+          <tr>
+            <th>Deal list</th>
             <td>
-              <p id="hn"></p>
+              <p id="ah"></p>
             </td>
-        </tr>
-        <tr>
-          <th colspan="2">Target gpa for honour</td>
-            <td colspan="2">
-              <p id="targetGPA"></p>
-            </td>
-        </tr>
-      </table>
-    </dir>
-    <dir class="col-md-10">
-      <p>Reference</p>
-      <ul>
-        <li>
-          <a href="http://ar.hkbu.edu.hk/file/123">EXPLANATORY NOTES for HKBU GRADING SYSTEM</a>
-        </li>
-        <li>
-          <a href="http://jsfiddle.net/c6WG8/8/">Code Example</a>
-        </li>
-      </ul>
+            <th>Hornor</td>
+              <td>
+                <p id="hn"></p>
+              </td>
+          </tr>
+          <tr>
+            <th colspan="2">Target gpa for honour</td>
+              <td colspan="2">
+                <p id="targetGPA"></p>
+              </td>
+          </tr>
+        </table>
+      </dir>
+      <dir class="col-md-10">
+        <p>Reference</p>
+        <ul>
+          <li>
+            <a href="http://ar.hkbu.edu.hk/file/123">EXPLANATORY NOTES for HKBU GRADING SYSTEM</a>
+          </li>
+          <li>
+            <a href="http://jsfiddle.net/c6WG8/8/">Code Example</a>
+          </li>
+        </ul>
+      </dir>
     </dir>
   </dir>
+
   <script>
     var gd_pt = [
       { grade: "A", pt: 4.0 },
