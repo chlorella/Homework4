@@ -57,18 +57,22 @@
     <!-- /.container -->
   </nav>
 
-  <header>
-    <dir class="container">
-      <br>
-      <dir class="col-lg-12">
-        <h1>HKBU GPA Calcular <small>By Carmen Chan</small></h1>
-      </dir>
-    </dir>
-  </header>
+
+
 
   <dir class="container">
-    <dir class="col-lg-12">
-      <dir class="row">
+    <dir class="row">
+      <header>
+        <br>
+        <h1>HKBU GPA calculator v.0.1<small>By Carmen Chan</small></h1>
+        <dir class="col-lg-12">
+          <h4>A GPA calculator for HKBU Jupas Student to predict their current Semester GPA and Honour by the current semester
+            course result.
+          </h4>
+          <p>Remark: Total credit is assumed as 128 for simply calculation.</p>
+        </dir>
+      </header>
+      <dir class="col-lg-12">
         <form class="form-inline" role="form">
           <div class="form-group">
             <div class="input-group">
@@ -91,6 +95,8 @@
           </div>
         </form>
       </dir>
+    </dir>
+    <dir class="col-lg-12">
       <h2>Semester GPA</h2>
       <dir class="row">
         <form class="form-inline" role="form" id="course">
@@ -126,48 +132,48 @@
         <button type="button" id="addRow" class="btn btn-primary">Add row</button>
         <button type="summit" id="summit" class="btn btn-success">Summit</button>
       </dir>
-      <dir class="col-md-8">
-        <h2>Result</h2>
-        <table class="table table-bordered">
-          <tr>
-            <th>Sem GPA</td>
-              <td>
-                <p id="sGPA"></p>
-              </td>
-              <th>cGPA</td>
-                <td>
-                  <p id="ncGPA"></p>
-                </td>
-          </tr>
-          <tr>
-            <th>Deal list</th>
+    </dir>
+    <dir class="col-lg-12">
+      <h2>Result</h2>
+      <table class="table table-bordered">
+        <tr>
+          <th>Sem GPA</td>
             <td>
-              <p id="ah"></p>
+              <p id="sGPA"></p>
             </td>
-            <th>Hornor</td>
+            <th>cGPA</td>
               <td>
-                <p id="hn"></p>
+                <p id="ncGPA"></p>
               </td>
-          </tr>
-          <tr>
-            <th colspan="2">Target gpa for honour</td>
-              <td colspan="2">
-                <p id="targetGPA"></p>
-              </td>
-          </tr>
-        </table>
-      </dir>
-      <dir class="col-md-10">
-        <p>Reference</p>
-        <ul>
-          <li>
-            <a href="http://ar.hkbu.edu.hk/file/123">EXPLANATORY NOTES for HKBU GRADING SYSTEM</a>
-          </li>
-          <li>
-            <a href="http://jsfiddle.net/c6WG8/8/">Code Example</a>
-          </li>
-        </ul>
-      </dir>
+        </tr>
+        <tr>
+          <th>Deal list</th>
+          <td>
+            <p id="ah"></p>
+          </td>
+          <th>Hornor</td>
+            <td>
+              <p id="hn"></p>
+            </td>
+        </tr>
+        <tr>
+          <th colspan="2">Target gpa for honour</td>
+            <td colspan="2">
+              <p id="targetGPA"></p>
+            </td>
+        </tr>
+      </table>
+    </dir>
+    <dir class="col-lg-12">
+      <p>Reference</p>
+      <ul>
+        <li>
+          <a href="http://ar.hkbu.edu.hk/file/123">EXPLANATORY NOTES for HKBU GRADING SYSTEM</a>
+        </li>
+        <li>
+          <a href="http://jsfiddle.net/c6WG8/8/">Code Example</a>
+        </li>
+      </ul>
     </dir>
   </dir>
 
